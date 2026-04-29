@@ -1,0 +1,33 @@
+name: Build Android App
+on:
+  push:
+    branches: 
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Bubblewrap
+        run: npm i -g @bubblewrap/cli
+
+      - name: Build AAB
+        run: |
+          bubblewrap init --manifest=https://joy523572-art.github.io/my-lovable-app/manifest.json --directory=app
+          bubblewrap build --directory=app
+
+      - name: Create Release & Upload AAB
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: App Build ${{ github.run_number }}
+          body: Auto-built from Lovable. Download the
