@@ -30,4 +30,6 @@ jobs:
         with:
           tag_name: build-${{ github.run_number }}
           name: App Build ${{ github.run_number }}
-          body: Auto-built from Lovable. Download the
+          body: Auto-built from Lovable. Download the .aab below for Play Store.
+          files: app/app-release-bundle.aab
+          make_latest: true
