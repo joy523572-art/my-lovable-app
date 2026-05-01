@@ -17,7 +17,7 @@ jobs:
         run: npm i -g @bubblewrap/cli
       - name: Build AAB
         run: |
-          bubblewrap init --manifest=https://joy523572-art.github.io/my-lovable-app/manifest.json --directory=app
+          bubblewrap init --manifest=https://ai-app-forge-03.lovable.app/manifest.json --directory=app
           bubblewrap build --directory=app
       - name: Upload AAB
         uses: softprops/action-gh-release@v2
