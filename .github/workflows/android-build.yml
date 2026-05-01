@@ -1,0 +1,26 @@
+name: Build Android App
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install Bubblewrap
+        run: npm i -g @bubblewrap/cli
+      - name: Build AAB
+        run: |
+          bubblewrap init --manifest=https://joy523572-art.github.io/my-lovable-app/manifest.json --directory=app
+          bubblewrap build --directory=app
+      - name: Upload AAB
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          files: app/app-release-bundle.aab
